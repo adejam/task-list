@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { TaskType } from '../App';
+import { TaskType } from '../types/taskType';
 
 const config = {
 

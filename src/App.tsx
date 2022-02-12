@@ -1,15 +1,8 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import Error from "./components/Error";
-
-export interface TaskType {
-  id: string;
-  label: string;
-  sort_order: number;
-  completed_at: string;
-  created_at: string;
-  updated_at: string;
-}
+import TaskList from "./components/TaskList";
+import { TaskType } from "./types/taskType";
 
 function App() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
@@ -37,11 +30,7 @@ function App() {
       </header>
       <main>
         <Error error={error} closeAlert={closeAlert} />
-        <div>
-          {tasks.map((task) => (
-            <div>{task.label}</div>
-          ))}
-        </div>
+        <TaskList tasks={tasks} setError={setError}/>
       </main>
     </div>
   );
