@@ -1,6 +1,5 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import { isLabeledStatement } from "typescript";
 import { TaskType } from "../types/taskType";
 
 interface TaskListProps {
@@ -28,7 +27,7 @@ const TaskList = ({ tasks, setError }: TaskListProps) => {
           Axios.put(`update-task/${id}`, newDebounceObject, config)
           .catch((e) => {
             if (e.message === "Request failed with status code 400") {
-                setError("duplicate task cannot be added")
+                setError("duplicate task cannot be added");
             }
           });
       }

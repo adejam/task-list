@@ -1,36 +1,27 @@
-import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import Error from "./components/Error";
+import Alert from "./components/Alert";
 import TaskList from "./components/TaskList";
-import { TaskType } from "./types/taskType";
+import useFetch from "./CustomHooks/useFetch";
 
 function App() {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  const [error, setError] = useState("");
-
-  const getTasks = () => {
-    Axios.get(`get-tasks`)
-      .then((res) => {
-        setTasks(res.data.tasks);
-      })
-      .catch(() => {
-        setError("an error occured while fetching tasks");
-      });
-  };
+  const [alert, setAlert] = useState("");
+  const {data: tasks, error} = useFetch('get-tasks');
   useEffect(() => {
-    getTasks();
-  }, []);
+    setAlert(error);
+  }, [error])
+  
   const closeAlert = () => {
-    setError("");
-  };
+    setAlert("");
+  }
+
   return (
     <div className="app">
       <header>
         <h1>Task App</h1>
       </header>
       <main>
-        <Error error={error} closeAlert={closeAlert} />
-        <TaskList tasks={tasks} setError={setError}/>
+          <Alert alert={alert} closeAlert={closeAlert}/>
+          <TaskList tasks={tasks} setError={setAlert}/>
       </main>
     </div>
   );
