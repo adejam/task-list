@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
+import { config } from "../config";
 import { TaskType } from "../types/taskType";
 
 interface TaskListProps {
@@ -11,6 +12,7 @@ const TaskList = ({ tasks, setError }: TaskListProps) => {
     const initialValue = {id: 0, label: ""};
     const [newDebounceObject, setNewDebounceObject] = useState(initialValue);
     const [taskObject, setTaskObject] = useState(initialValue);
+    const [labelError, setLabelError] = useState("");
     useEffect(() => {
         const timer = setTimeout(() => {
             setNewDebounceObject({id: taskObject.id, label: taskObject.label});
@@ -19,17 +21,19 @@ const TaskList = ({ tasks, setError }: TaskListProps) => {
           clearTimeout(timer);
         };
       }, [taskObject.id, taskObject.label]);
-      const config = {
-        headers: { "Content-Type": "application/json" }
-      }
       const updateTask = (id: number) => {
-
-          Axios.put(`update-task/${id}`, newDebounceObject, config)
+          if(newDebounceObject.label) {
+           Axios.put(`update-task/${id}`, newDebounceObject, config)
           .catch((e) => {
             if (e.message === "Request failed with status code 400") {
                 setError("duplicate task cannot be added");
             }
           });
+          setLabelError("");
+          } else {
+            setLabelError("Label cannot be empty")
+          }
+          
       }
 
       useEffect(() => {
@@ -42,7 +46,7 @@ const TaskList = ({ tasks, setError }: TaskListProps) => {
     <div>
       {tasks.map((task) => (
         <div key={task.id} style={{ marginTop: 70 }}>
-          {task.label}
+          {task.label} {task.sort_order}
           <input
             type="text"
             value={(taskObject.id === task.id) ? taskObject.label : task.label}
@@ -51,7 +55,8 @@ const TaskList = ({ tasks, setError }: TaskListProps) => {
                 e.stopPropagation();
                 setTaskObject({...taskObject, id: task.id, label:e.target.value})
             }}
-            required />
+            />
+            <div>{labelError && labelError}</div>
         </div>
       ))}
     </div>
