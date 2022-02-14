@@ -8,8 +8,12 @@ import { DataFromFetchTasksRequest } from "./types/typesFromRequest";
 
 function App() {
   const [alert, setAlert] = useState("");
+  const [isCalled, setIsCalled] = useState(true);
+  const setTheIsCalled = (value: boolean) => {
+    setIsCalled(value);
+  }
   const { data: tasksFetched, error }: DataFromFetchTasksRequest =
-    useFetch("get-tasks");
+    useFetch("get-tasks", isCalled, setTheIsCalled);
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +42,7 @@ function App() {
           setIsLoading={setIsLoading}
         />
         <Alert alert={alert} closeAlert={closeAlert} />
-        <TaskList tasks={tasks} setError={setAlert} />
+        <TaskList tasks={tasks} setError={setAlert} setTheIsCalled={setTheIsCalled}/>
       </main>
     </div>
   );
