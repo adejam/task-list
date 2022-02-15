@@ -64,9 +64,15 @@ const TaskList = ({ tasks, setError, setTheIsCalled }: TaskListProps) => {
   const markTaskInComplete = (id: number) => {
     updateTask(id, {task_completed_status: false});
   };
+
+  const sortTask = (id: number, value: string) => {
+    updateTask(id, {sort_order: parseInt(value)});
+  }
   return (
     <div>
-      {tasks.map((task) => (
+      {tasks.map((task) => {
+        const sortedTasks = tasks.filter((t) => t.id !== task.id);
+        return(
         <div key={task.id} style={{ marginTop: 70 }}>
           {task.label} {task.sort_order}
           <div>
@@ -82,6 +88,17 @@ const TaskList = ({ tasks, setError, setTheIsCalled }: TaskListProps) => {
             <div>{(labelError.id === task.id && labelError) && labelError.error}</div>
           </div>
           <div>
+            <select onChange={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                sortTask(task.id, e.target.value)}}>
+              <option value={task.sort_order}>{task.sort_order}</option>
+              {sortedTasks.map((tSort) => (
+                <option key={tSort.id} value={tSort.sort_order}>{`${tSort.label}  ${tSort.sort_order}`}</option> 
+              ))}
+            </select>
+          </div>
+          <div>
             {task.completed_at} <br />
             {task.created_at}
             {task.completed_at === task.created_at ? (
@@ -95,7 +112,7 @@ const TaskList = ({ tasks, setError, setTheIsCalled }: TaskListProps) => {
             )}
           </div>
         </div>
-      ))}
+      )})}
     </div>
   );
 };
