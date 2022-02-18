@@ -19,11 +19,17 @@ function App() {
 
   useEffect(() => {
     setAlert(error);
-    setTasks(tasksFetched);
+    // if (tasksFetched.length > 0) { 
+      setTasks(tasksFetched);
+    // }  
   }, [error, tasksFetched]);
   const closeAlert = () => {
     setAlert("");
   };
+
+  const setTheTasks = (tasks: TaskType[]) => {
+    setTasks(tasks);
+  }
 
   const addNewTaskToTasks = (task: TaskType): void => {
     setTasks([...tasks, task]);
@@ -42,7 +48,14 @@ function App() {
           setIsLoading={setIsLoading}
         />
         <Alert alert={alert} closeAlert={closeAlert} />
-        <TaskList tasks={tasks} setError={setAlert} setTheIsCalled={setTheIsCalled}/>
+        <TaskList 
+          tasks={tasks}
+          setError={setAlert}
+          setTheTasks={setTheTasks}
+          setTheIsCalled={setTheIsCalled}
+          setTasks={setTasks}
+          tasksFetched={tasksFetched}
+        />
       </main>
     </div>
   );

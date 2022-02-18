@@ -6,6 +6,7 @@ const useFetch = (url: string, isCalled: boolean, setTheIsCalled:(value: boolean
   const [error, setError] = useState("");
   useEffect(() => {
     if (isCalled) {
+      console.log("usefetch");
       Axios.get(url)
       .then((res) => {
         setData(res.data.tasks);
