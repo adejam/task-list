@@ -3,7 +3,7 @@ import AddTask from "./components/AddTask";
 import Alert from "./components/Alert";
 import TaskList from "./components/TaskList";
 import useFetch from "./CustomHooks/useFetch";
-import { TaskType } from "./types/taskType";
+import { ITaskType } from "./types/taskType";
 import { DataFromFetchTasksRequest } from "./types/typesFromRequest";
 
 function App() {
@@ -11,27 +11,30 @@ function App() {
   const [isCalled, setIsCalled] = useState(true);
   const setTheIsCalled = (value: boolean) => {
     setIsCalled(value);
-  }
-  const { data: tasksFetched, error }: DataFromFetchTasksRequest =
-    useFetch("get-tasks", isCalled, setTheIsCalled);
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  };
+  const { data: tasksFetched, error }: DataFromFetchTasksRequest = useFetch(
+    "get-tasks",
+    isCalled,
+    setTheIsCalled
+  );
+  const [tasks, setTasks] = useState<ITaskType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setAlert(error);
-    // if (tasksFetched.length > 0) { 
-      setTasks(tasksFetched);
-    // }  
+    // if (tasksFetched.length > 0) {
+    setTasks(tasksFetched);
+    // }
   }, [error, tasksFetched]);
   const closeAlert = () => {
     setAlert("");
   };
 
-  const setTheTasks = (tasks: TaskType[]) => {
+  const setTheTasks = (tasks: ITaskType[]) => {
     setTasks(tasks);
-  }
+  };
 
-  const addNewTaskToTasks = (task: TaskType): void => {
+  const addNewTaskToTasks = (task: ITaskType): void => {
     setTasks([...tasks, task]);
   };
 
@@ -48,7 +51,7 @@ function App() {
           setIsLoading={setIsLoading}
         />
         <Alert alert={alert} closeAlert={closeAlert} />
-        <TaskList 
+        <TaskList
           tasks={tasks}
           setError={setAlert}
           setTheTasks={setTheTasks}

@@ -1,11 +1,11 @@
-import { TaskType } from "./taskType";
+import { ITaskType } from "./taskType";
 
 export interface DataFromAddTaskRequest {
   message: string;
-  task: TaskType;
+  task: ITaskType;
 }
 
 export interface DataFromFetchTasksRequest {
-  data: TaskType[];
+  data: ITaskType[];
   error: string;
 }

@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: "Helvetica Neue",sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
@@ -38,7 +38,7 @@ body {
   flex-wrap: wrap;
 }
 
-.task-card{
+.task-card {
   flex: 1;
   min-width: 250px;
   border-radius: 4px;
