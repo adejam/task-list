@@ -9,3 +9,8 @@ export interface DataFromFetchTasksRequest {
   data: ITaskType[];
   error: string;
 }
+
+export interface IRequestObject {
+  id: number;
+  value: string;
+}

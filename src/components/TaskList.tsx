@@ -2,8 +2,10 @@ import { arrayMoveMutable } from "array-move";
 import { useEffect, useState } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import TasksApi from "../api/tasksApi";
+import useDebounce from "../CustomHooks/useDebounce";
 import { IIndex, IInputError } from "../types/otherTypes";
 import { ITaskType, ITaskValues } from "../types/taskType";
+import { IRequestObject } from "../types/typesFromRequest";
 
 interface TaskListProps {
   tasks: ITaskType[];
@@ -12,11 +14,6 @@ interface TaskListProps {
   setTheIsCalled: (value: boolean) => void;
   setTasks: (arg0: ITaskType[]) => void;
   tasksFetched: ITaskType[];
-}
-
-interface ITaskObjectType {
-  id: number;
-  label: string;
 }
 
 interface SortableListProps extends SortableProps {
@@ -32,7 +29,7 @@ interface SortableProps {
   markTaskInComplete: (id: number) => void;
   changeLabelValue: (id: number, labelValue: string) => void;
   labelError: IInputError;
-  taskObject: ITaskObjectType;
+  taskObject: IRequestObject;
 }
 
 const SortableItem = SortableElement(
@@ -50,7 +47,7 @@ const SortableItem = SortableElement(
         <div>
           <input
             type="text"
-            value={taskObject.id === task.id ? taskObject.label : task.label}
+            value={taskObject.id === task.id ? taskObject.value : task.label}
             onChange={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -115,8 +112,8 @@ const TaskList = ({
   setTheTasks,
   setTasks,
 }: TaskListProps) => {
-  const initialValue = { id: 0, label: "" };
-  const [newDebounceObject, setNewDebounceObject] = useState(initialValue);
+  const initialValue = { id: 0, value: "" };
+  
   const [taskObject, setTaskObject] = useState(initialValue);
   const [labelError, setLabelError] = useState({ id: 0, error: "" });
   const [checkDnd, setCheckDnd] = useState(0);
@@ -126,14 +123,7 @@ const TaskList = ({
       setCheckDnd(0);
     }
   }, [checkDnd]);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setNewDebounceObject({ id: taskObject.id, label: taskObject.label });
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [taskObject.id, taskObject.label]);
+  const { newDebounceObject, setNewDebounceObject } = useDebounce(taskObject, 1000);
   const updateTask = async (id: number, values: ITaskValues) => {
     const { result, error } = await TasksApi.updateTask(id, values);
     if (result) {
@@ -147,16 +137,17 @@ const TaskList = ({
   };
 
   useEffect(() => {
-    if (newDebounceObject.id && newDebounceObject.label) {
-      updateTask(newDebounceObject.id, newDebounceObject);
-      setNewDebounceObject({ id: 0, label: "" });
+    if (newDebounceObject.id && newDebounceObject.value) {
+      const label = newDebounceObject.value;
+      updateTask(newDebounceObject.id, { label });
+      setNewDebounceObject({ id: 0, value: "" });
     }
-  }, [newDebounceObject.id, newDebounceObject.label]);
+  }, [newDebounceObject.id, newDebounceObject.value]);
   const changeLabelValue = (id: number, labelValue: string) => {
     setTaskObject({
       ...taskObject,
       id: id,
-      label: labelValue,
+      value: labelValue,
     });
     if (labelValue.length < 1) {
       setLabelError({ id, error: "Label cannot be empty" });
