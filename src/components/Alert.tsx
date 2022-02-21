@@ -9,8 +9,8 @@ export type CloseAlert = {
 
 const Alert = ({ alert, closeAlert }: AlertProps) => {
   return (
-    <div className={`alert ${alert ? "d-block" : "d-none"} `}>
-      <span>{alert}</span>
+    <div className={`alert alert-success ${alert ? "d-flex" : "d-none"} `}>
+      <span style={{marginRight: '0.8rem'}}>{alert}</span>
       <span onClick={closeAlert}>X</span>
     </div>
   );

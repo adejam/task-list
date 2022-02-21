@@ -4,7 +4,82 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
-  background-color: #8798ad;
+  background-color: #e9edf9;
+}
+
+.btn {
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  display: block;
+  font-weight: 300;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  margin: 0 auto;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0290ff;
+  border-color: #007bff;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #0290ff;
+  border-color: #007bff;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem auto;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  width: 95%;
+  justify-content: space-between;
+}
+
+.alert-danger {
+  color: #dc262b;
+  background-color: #fce4e5;
+  border-color: #e84a50;
+}
+
+.alert-success {
+  color: #11a783;
+  background-color: #e0f6f2;
+  border-color: #2cc2a5;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow: hidden;
+}
+
+.navbar-brand {
+  display: inline-block;
+  padding: 0.3125rem 0;
+  margin-right: 1rem;
+  font-size: 1.2em;
+  line-height: inherit;
 }
 
 .d-none {

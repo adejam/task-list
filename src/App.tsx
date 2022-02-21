@@ -22,9 +22,7 @@ function App() {
 
   useEffect(() => {
     setAlert(error);
-    // if (tasksFetched.length > 0) {
     setTasks(tasksFetched);
-    // }
   }, [error, tasksFetched]);
   const closeAlert = () => {
     setAlert("");
@@ -40,17 +38,18 @@ function App() {
 
   return (
     <div className="app">
-      <header>
-        <h1>Task App</h1>
+      <header style={{backgroundColor: '#fff'}}>
+        <nav className="navbar container"><div className="navbar-brand"><b>Task App</b></div></nav>
       </header>
-      <main>
-        <>{isLoading && <div>Is Loading</div>}</>
+      <main className="container">
+        <>{isLoading && <div>Is Loading...</div>}</>
+        <Alert alert={alert} closeAlert={closeAlert} />
         <AddTask
           addNewTaskToTasks={addNewTaskToTasks}
           setAlert={setAlert}
           setIsLoading={setIsLoading}
         />
-        <Alert alert={alert} closeAlert={closeAlert} />
+        
         <TaskList
           tasks={tasks}
           setError={setAlert}
