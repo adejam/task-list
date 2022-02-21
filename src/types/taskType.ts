@@ -16,3 +16,9 @@ export interface ITaskSortValue {
   id: number;
   sort_order: number;
 }
+
+export interface IAddTaskResult {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  task: any;
+  message: string
+}

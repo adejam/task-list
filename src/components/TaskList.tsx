@@ -1,9 +1,7 @@
 import { arrayMoveMutable } from "array-move";
-import Axios from "axios";
 import { useEffect, useState } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import TasksApi from "../api/tasksApi";
-import { config } from "../config";
 import { IIndex, IInputError } from "../types/otherTypes";
 import { ITaskType, ITaskValues } from "../types/taskType";
 
