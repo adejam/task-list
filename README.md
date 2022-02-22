@@ -5,6 +5,8 @@ This is a task app that can be used to keep record of tasks. It consumes the [ta
 ## Technologies used
 
 - React
+- Typescript
+- Axios
 - React-sortable-hoc
 - Array-move
 
@@ -52,7 +54,7 @@ npm run lint
 
 ## @Todo
 
-- Improve on styling and overall UI feel
+- Improve on styling, especially on different screens and overall UI feel
 - React-sortable-hoc is deprecated in new versions of react. I works fine now but might cause issues in the future. Currently looking into React-DND-kit as a replacement.
 - Add functionality to delete task
 - Add functionality to switch `allow_duplicates` setting
