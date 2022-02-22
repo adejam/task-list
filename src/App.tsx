@@ -48,7 +48,7 @@ function App() {
       <main className="container">
         <>
           {isLoading && (
-            <div className="spinner-border text-info">Is Loading...</div>
+            <div className="text-center">Is Loading...</div>
           )}
         </>
         <Alert alert={alert} closeAlert={closeAlert} />

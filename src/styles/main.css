@@ -139,14 +139,17 @@ body {
   padding: 10px;
   height: 150px;
   max-width: 300px;
-  border: 1px solid #8c54ff;
   margin: 20px;
   background-color: #fff;
 }
 
+.task-card:hover {
+  border: 1px solid #0243eb;
+}
+
 .task-card-box-shadow {
-  box-shadow: 0 0 0 0.25rem #652eff;
-  /* box-shadow: 0 2px 4px 0 #652eff, 0 6px 7px 0 #652eff; */
+  box-shadow: 0 0 0 0.25rem #dbe9fd;
+  border: 1px solid #0b6bf2;
 }
 
 .checkmark-div {
