@@ -14,9 +14,9 @@ This is a task app that can be used to keep record of tasks. It consumes the [ta
 
 - Get all tasks.
 - Create a task.
-- update a task label.
+- update a task label using autosave feature and debounce hooks.
 - update task sort order.
-- update task completed time.
+- update task completed status.
 
 ## Live Demo
 [Live Demo](https://ja-task-app.netlify.app/)
