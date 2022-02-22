@@ -7,7 +7,7 @@ import { ITaskType } from "./types/taskType";
 import { DataFromFetchTasksRequest } from "./types/typesFromRequest";
 
 function App() {
-  const [alert, setAlert] = useState("");
+  const [alert, setAlert] = useState({ text: "", type: "" });
   const [isCalled, setIsCalled] = useState(true);
   const setTheIsCalled = (value: boolean) => {
     setIsCalled(value);
@@ -21,13 +21,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setAlert(error);
-    // if (tasksFetched.length > 0) {
+    setAlert({ text: error, type: "failure" });
     setTasks(tasksFetched);
-    // }
   }, [error, tasksFetched]);
   const closeAlert = () => {
-    setAlert("");
+    setAlert({ text: "", type: "" });
   };
 
   const setTheTasks = (tasks: ITaskType[]) => {
@@ -40,17 +38,26 @@ function App() {
 
   return (
     <div className="app">
-      <header>
-        <h1>Task App</h1>
+      <header style={{ backgroundColor: "#fff" }}>
+        <nav className="navbar container">
+          <div className="navbar-brand">
+            <b>Task App</b>
+          </div>
+        </nav>
       </header>
-      <main>
-        <>{isLoading && <div>Is Loading</div>}</>
+      <main className="container">
+        <>
+          {isLoading && (
+            <div className="text-center">Is Loading...</div>
+          )}
+        </>
+        <Alert alert={alert} closeAlert={closeAlert} />
         <AddTask
           addNewTaskToTasks={addNewTaskToTasks}
           setAlert={setAlert}
           setIsLoading={setIsLoading}
         />
-        <Alert alert={alert} closeAlert={closeAlert} />
+
         <TaskList
           tasks={tasks}
           setError={setAlert}
