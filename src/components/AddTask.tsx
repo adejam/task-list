@@ -6,7 +6,9 @@ import { ILabelValue } from "../types/otherTypes";
 interface AddTaskProps {
   addNewTaskToTasks: (task: ITaskType) => void;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlert: React.Dispatch<React.SetStateAction<string>>;
+  setAlert: React.Dispatch<
+    React.SetStateAction<{ text: string; type: string }>
+  >;
 }
 
 const AddTask = ({
@@ -18,21 +20,22 @@ const AddTask = ({
   const [taskInputError, setTaskInputError] = useState("");
 
   const addTask = async (newTaskValue: ILabelValue) => {
-    const {result, error} = await TasksApi.addTask(newTaskValue);
+    const { result, error } = await TasksApi.addTask(newTaskValue);
     if (!error) {
       addNewTaskToTasks(result.task);
-      setAlert(result.message);
+      setAlert({ text: result.message, type: "success" });
       setIsLoading(false);
       setNewTaskValue({ ...newTaskValue, label: "" });
     } else {
-      setAlert("duplicate task cannot be added");
+      setAlert({ text: "Duplicate task cannot be added", type: "failure" });
     }
-  } 
+    setTaskInputError("");
+  };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!newTaskValue.label) {
-      setTaskInputError("label field is required");
+      setTaskInputError("Label field is required");
     } else {
       setIsLoading(true);
       addTask(newTaskValue);
@@ -40,18 +43,21 @@ const AddTask = ({
     }
   };
   return (
-    <form onSubmit={submitHandler}>
-      <div>
+    <form onSubmit={submitHandler} className="small-form">
+      <div className="d-flex">
         <input
           type={"text"}
           value={newTaskValue.label}
           onChange={(e) =>
             setNewTaskValue({ ...newTaskValue, label: e.target.value })
           }
+          className="form-input"
         />
-        <button type="submit">Add Task</button>
+        <button type="submit" className="btn btn-primary">
+          Add Task
+        </button>
       </div>
-      <div>{taskInputError}</div>
+      <div style={{ color: "#e84a50", padding: 5 }}>{taskInputError}</div>
     </form>
   );
 };
