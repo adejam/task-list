@@ -69,7 +69,7 @@ const SortableItem = SortableElement(
               }}
               className="dynamic-input full-width"
             />
-            <div>
+            <div style={{ color: "#e84a50", padding: 5 }}>
               {labelError.id === task.id && labelError && labelError.error}
             </div>
           </div>
